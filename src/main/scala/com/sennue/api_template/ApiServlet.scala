@@ -14,7 +14,7 @@ class ApiServlet extends SennueApiTemplateStack with JacksonJsonSupport {
   }
 
   error {
-    case throwable: Throwable => ErrorResult(false, throwable.getClass.getSimpleName, throwable.getMessage)
+    case throwable: Throwable => InternalServerError(ErrorResult(false, throwable.getClass.getSimpleName, throwable.getMessage))
   }
 
   get("/") {

@@ -17,7 +17,7 @@ If `browse` doesn't launch your browser, manually open [http://localhost:8080/](
 ```sh
 #!/bin/sh
 
-export USER_ID='"1234567890"'
+export USER_ID='"curl-'`hostname`'"'
 export SENNUE_API='http://localhost:8080'
 export CONTENT_TYPE="Content-Type: application/json"
 
