@@ -4,13 +4,16 @@ import org.scalatra.test.specs2._
 import org.json4s.{DefaultFormats, Formats}
 import org.json4s.jackson.JsonMethods._
 import scala.reflect._
+import com.mchange.v2.c3p0.ComboPooledDataSource
+import scala.slick.jdbc.JdbcBackend.Database
+
 
 // For more on Specs2, see http://etorreborre.github.com/specs2/guide/org.specs2.guide.QuickStart.html
 class ApiServletSpec extends ScalatraSpec {
 
   protected implicit val jsonFormats: Formats = DefaultFormats
 
-  addServlet(classOf[ApiServlet], "/*")
+  addServlet(new ApiServlet(Database.forDataSource(new ComboPooledDataSource)), "/*")
 
   val API_USER = "unit-test"
 
@@ -69,3 +72,4 @@ class ApiServletSpec extends ScalatraSpec {
   // got help in #scala on irc.freenode.net for this one
   def getRuntimeClass[T: ClassTag]() = implicitly[ClassTag[T]].runtimeClass
 }
+

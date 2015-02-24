@@ -23,8 +23,8 @@ $ ./sbt test
 ```sh
 #!/bin/sh
 
-export USER_ID='"curl-'`hostname`'"'
 export SENNUE_API='http://localhost:8080'
+export USER_ID='"curl-'`hostname`'"'
 export CONTENT_TYPE="Content-Type: application/json"
 
 export SENNUE_ENDPOINT=""

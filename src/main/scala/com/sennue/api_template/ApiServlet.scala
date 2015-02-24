@@ -4,8 +4,18 @@ import org.scalatra._
 import scalate.ScalateSupport
 import org.json4s.{DefaultFormats, Formats}
 import org.scalatra.json._
+import scala.slick.driver.PostgresDriver.simple._
+import scala.slick.jdbc.JdbcBackend.Database
 
-class ApiServlet extends SennueApiTemplateStack with JacksonJsonSupport {
+case class ApiServlet(db:Database) extends SennueApiTemplateStack with SlickRoutes
+
+case class MessagePost(id: String, message: String)
+case class MessageResult(success: Boolean, id: String, message: String)
+case class ErrorResult(success: Boolean, error: String, message: String)
+
+trait SlickRoutes extends SennueApiTemplateStack with JacksonJsonSupport {
+
+  val db: Database
 
   protected implicit val jsonFormats: Formats = DefaultFormats
 
@@ -18,7 +28,7 @@ class ApiServlet extends SennueApiTemplateStack with JacksonJsonSupport {
   }
 
   get("/") {
-    MessageResult(true, "???", "Hello, world!")
+    MessageResult(true, "unknown-user", "Hello, world!")
   }
 
   get("/error/?") {
@@ -31,8 +41,4 @@ class ApiServlet extends SennueApiTemplateStack with JacksonJsonSupport {
   }
 
 }
-
-case class MessagePost(id: String, message: String)
-case class MessageResult(success: Boolean, id: String, message: String)
-case class ErrorResult(success: Boolean, error: String, message: String)
 
