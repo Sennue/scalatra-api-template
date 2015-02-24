@@ -24,6 +24,9 @@ export CONTENT_TYPE="Content-Type: application/json"
 export SENNUE_ENDPOINT=""
 curl $SENNUE_API/$SENNUE_ENDPOINT | python -m json.tool
 
+export SENNUE_ENDPOINT="error"
+curl $SENNUE_API/$SENNUE_ENDPOINT | python -m json.tool
+
 export SENNUE_ENDPOINT="echo"
 export MESSAGE='"Echo this message!"'
 curl -H $CONTENT_TYPE -d "{\"id\":$USER_ID,\"message\":$MESSAGE}" $SENNUE_API/$SENNUE_ENDPOINT | python -m json.tool

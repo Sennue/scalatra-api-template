@@ -3,7 +3,6 @@ package com.sennue.api_template
 import org.scalatra._
 import scalate.ScalateSupport
 import org.json4s.{DefaultFormats, Formats}
-import org.json4s.MappingException
 import org.scalatra.json._
 
 class ApiServlet extends SennueApiTemplateStack with JacksonJsonSupport {
@@ -14,23 +13,26 @@ class ApiServlet extends SennueApiTemplateStack with JacksonJsonSupport {
     contentType = formats("json")
   }
 
+  error {
+    case throwable: Throwable => ErrorResult(false, throwable.getClass.getSimpleName, throwable.getMessage)
+  }
+
   get("/") {
     MessageResult(true, "???", "Hello, world!")
   }
 
+  get("/error/?") {
+    throw new Exception("This endpoint always fails.")
+  }
+
   post("/echo/?") {
-    try {
-      val messagePost = parsedBody.extract[MessagePost]
-      MessageResult(true, messagePost.id, messagePost.message)
-    }
-    catch {
-      case mappingException: MappingException => ErrorResult(false, mappingException.msg)
-    }
+    val messagePost = parsedBody.extract[MessagePost]
+    MessageResult(true, messagePost.id, messagePost.message)
   }
 
 }
 
 case class MessagePost(id: String, message: String)
 case class MessageResult(success: Boolean, id: String, message: String)
-case class ErrorResult(success: Boolean, error: String)
+case class ErrorResult(success: Boolean, error: String, message: String)
 
