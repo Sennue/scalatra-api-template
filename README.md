@@ -11,3 +11,19 @@ $ ./sbt
 ```
 
 If `browse` doesn't launch your browser, manually open [http://localhost:8080/](http://localhost:8080/) in your browser.
+
+```sh
+#!/bin/sh
+
+export USER_ID='"1234567890"'
+export SENNUE_API='http://localhost:8080'
+export CONTENT_TYPE="Content-Type: application/json"
+
+export SENNUE_ENDPOINT=""
+curl $SENNUE_API/$SENNUE_ENDPOINT | python -m json.tool
+
+export SENNUE_ENDPOINT="echo"
+export MESSAGE='"Echo this message!"'
+curl -H $CONTENT_TYPE -d "{\"id\":$USER_ID,\"message\":$MESSAGE}" $SENNUE_API/$SENNUE_ENDPOINT | python -m json.tool
+```
+
