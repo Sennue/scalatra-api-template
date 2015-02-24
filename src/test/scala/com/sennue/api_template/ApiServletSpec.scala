@@ -12,8 +12,10 @@ class ApiServletSpec extends ScalatraSpec {
 
   addServlet(classOf[ApiServlet], "/*")
 
-  val ECHO_REQUEST_GOOD = """{"id":"unit-test","message":"Message."}"""
-  val ECHO_RESPONSE_GOOD = """{"success":true,"id":"unit-test","message":"Message."}"""
+  val API_USER = "unit-test"
+
+  val ECHO_MESSAGE = "Message."
+  val ECHO_REQUEST_GOOD = f"""{"id":"$API_USER%s","message":"$ECHO_MESSAGE%s"}"""
   val ECHO_REQUEST_BAD = """{}"""
 
   def is =
@@ -26,9 +28,9 @@ class ApiServletSpec extends ScalatraSpec {
     "POST /echo on ApiServlet"                   ^
     "should have success status"                 ! postResponseBodyKeyEqualsValue("/echo", ECHO_REQUEST_GOOD, "success", true)^
     "POST /echo on ApiServlet"                   ^
-    "should return passed in user id"            ! postResponseBodyKeyEqualsValue("/echo", ECHO_REQUEST_GOOD, "id", "unit-test")^
+    "should return passed in user id"            ! postResponseBodyKeyEqualsValue("/echo", ECHO_REQUEST_GOOD, "id", API_USER)^
     "POST /echo on ApiServlet"                   ^
-    "should return passed in message"            ! postResponseBodyKeyEqualsValue("/echo", ECHO_REQUEST_GOOD, "message", "Message.")^
+    "should return passed in message"            ! postResponseBodyKeyEqualsValue("/echo", ECHO_REQUEST_GOOD, "message", ECHO_MESSAGE)^
     "POST /echo on ApiServlet"                   ^
     "bad JSON should return status 500"          ! postStatusCode("/echo", ECHO_REQUEST_BAD, 500)^
     "POST /echo on ApiServlet"                   ^
