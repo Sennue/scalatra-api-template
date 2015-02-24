@@ -6,6 +6,7 @@
 $ cd scalatra_api_template
 $ ./sbt
 > container:start
+> ~ ;copy-resources;aux-compile
 > browse
 ```
 
