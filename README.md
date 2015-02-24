@@ -12,6 +12,12 @@ $ ./sbt
 
 If `browse` doesn't launch your browser, manually open [http://localhost:8080/](http://localhost:8080/) in your browser.
 
+## Run Unit Tests ##
+
+```sh
+$ ./sbt test
+```
+
 ## Curl Call Examples ##
 
 ```sh
