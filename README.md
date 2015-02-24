@@ -3,7 +3,7 @@
 ## Build & Run ##
 
 ```sh
-$ cd Sennue_API_Template
+$ cd scalatra_api_template
 $ ./sbt
 > container:start
 > browse
