@@ -7,6 +7,8 @@ import org.scalatra.json._
 import scala.slick.jdbc.JdbcBackend.Database
 import com.sennue.api_template.ConfiguredPostgresDriver.simple._
 import com.sennue.api_template.models._
+import com.sennue.api_template.models.MessageTable
+import java.sql.Timestamp
 
 case class ApiServlet(db:Database) extends SennueApiTemplateStack with SlickRoutes
 
@@ -21,11 +23,11 @@ trait SlickRoutes extends SennueApiTemplateStack with JacksonJsonSupport {
   }
 
   error {
-    case throwable: Throwable => InternalServerError(ErrorResult(false, throwable.getClass.getSimpleName, throwable.getMessage))
+    case throwable: Throwable => InternalServerError(Result(false, Error(throwable.getClass.getSimpleName, throwable.getMessage)))
   }
 
   get("/") {
-    MessageResult(true, "unknown-user", "Hello, world!")
+    Result[Message](true, new Message(0, "system", new Timestamp(System.currentTimeMillis()), true, "anonymous", "Hello, world!"))
   }
 
   get("/error/?") {
@@ -33,14 +35,20 @@ trait SlickRoutes extends SennueApiTemplateStack with JacksonJsonSupport {
   }
 
   post("/echo/?") {
-    val messagePost = parsedBody.extract[MessagePost]
-    MessageResult(true, messagePost.id, messagePost.message)
+    val message = parsedBody.extract[Message]
+    Result(true, message)
   }
 
   get("/message/?") {
+    db withDynSession { implicit session: Session =>
+      val l = messages.drop(0).take(5)
+    }
   }
 
   post("/message/?") {
+    db withDynSession { implicit session: Session =>
+      messages.insert(new Message(-1, "userId", new Timestamp(System.currentTimeMillis()), true, "username", "message"))
+    }
   }
 }
 
