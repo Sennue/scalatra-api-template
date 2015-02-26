@@ -26,6 +26,15 @@ package object models {
     message: String
   )
 
+  case class MessagePost(
+    //id: Option[Int],
+    userId: String,
+    //timestamp: Option[Timestamp],
+    //active: Option[Boolean],
+    username: String,
+    message: String
+  )
+
   class MessageTable(tag: Tag) extends Table[Message](tag, "") {
     def id = column[Int]("id", O.AutoInc, O.PrimaryKey)
     def userId = column[String]("user_id")
@@ -38,8 +47,6 @@ package object models {
   }
 
   object messages extends TableQuery(new MessageTable(_)) {
-    //def insert(message: Message) = messages.insert(message)
-
     def byId(ids: Int*) = messages
       .filter(_.id inSetBind ids)
       .map(t => t)

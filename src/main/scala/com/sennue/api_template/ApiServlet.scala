@@ -35,20 +35,25 @@ trait SlickRoutes extends SennueApiTemplateStack with JacksonJsonSupport {
   }
 
   post("/echo/?") {
-    val message = parsedBody.extract[Message]
+    val message = parsedBody.extract[MessagePost]
     Result(true, message)
   }
 
   get("/message/?") {
+    var data: List[Message] = Nil
     db withDynSession { implicit session: Session =>
-      val l = messages.drop(0).take(5)
+      data = messages.drop(0).take(5).list
     }
+    Result[List[Message]](true, data)
   }
 
   post("/message/?") {
+    var result: Int = 0
+    var message = parsedBody.extract[MessagePost]
     db withDynSession { implicit session: Session =>
-      messages.insert(new Message(-1, "userId", new Timestamp(System.currentTimeMillis()), true, "username", "message"))
+      result = messages.insert(Message(-1, message.userId, new Timestamp(System.currentTimeMillis()), true, message.username, message.message))
     }
+    Result(true, result)
   }
 }
 

@@ -25,7 +25,7 @@ $ ./sbt test
 
 export SENNUE_API='http://localhost:8080'
 export USER_ID='"curl-'`hostname`'"'
-export CONTENT_TYPE="Content-Type: application/json"
+export CONTENT_TYPE="Content-Type:application/json"
 
 export SENNUE_ENDPOINT=""
 curl $SENNUE_API/$SENNUE_ENDPOINT | python -m json.tool
@@ -34,7 +34,13 @@ export SENNUE_ENDPOINT="error"
 curl $SENNUE_API/$SENNUE_ENDPOINT | python -m json.tool
 
 export SENNUE_ENDPOINT="echo"
-export MESSAGE='"Echo this message!"'
-curl -H $CONTENT_TYPE -d "{\"id\":$USER_ID,\"message\":$MESSAGE}" $SENNUE_API/$SENNUE_ENDPOINT | python -m json.tool
+export USERNAME='"anonymous"'
+export MESSAGE='"Echo message."'
+curl -X POST -H $CONTENT_TYPE -d "{\"userId\":$USER_ID,\"username\":$USERNAME,\"message\":$MESSAGE}" $SENNUE_API/$SENNUE_ENDPOINT | python -m json.tool
+
+export SENNUE_ENDPOINT="message"
+export USERNAME='"anonymous"'
+export MESSAGE='"Hello everyone!"'
+curl -X POST -H $CONTENT_TYPE -d "{\"userId\":$USER_ID,\"username\":$USERNAME,\"message\":$MESSAGE}" $SENNUE_API/$SENNUE_ENDPOINT | python -m json.tool
 ```
 
