@@ -4,14 +4,11 @@ import org.scalatra._
 import scalate.ScalateSupport
 import org.json4s.{DefaultFormats, Formats}
 import org.scalatra.json._
-import scala.slick.driver.PostgresDriver.simple._
 import scala.slick.jdbc.JdbcBackend.Database
+import com.sennue.api_template.ConfiguredPostgresDriver.simple._
+import com.sennue.api_template.models._
 
 case class ApiServlet(db:Database) extends SennueApiTemplateStack with SlickRoutes
-
-case class MessagePost(id: String, message: String)
-case class MessageResult(success: Boolean, id: String, message: String)
-case class ErrorResult(success: Boolean, error: String, message: String)
 
 trait SlickRoutes extends SennueApiTemplateStack with JacksonJsonSupport {
 
@@ -40,5 +37,10 @@ trait SlickRoutes extends SennueApiTemplateStack with JacksonJsonSupport {
     MessageResult(true, messagePost.id, messagePost.message)
   }
 
+  get("/message/?") {
+  }
+
+  post("/message/?") {
+  }
 }
 

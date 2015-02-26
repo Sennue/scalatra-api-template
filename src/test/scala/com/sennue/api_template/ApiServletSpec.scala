@@ -6,7 +6,7 @@ import org.json4s.jackson.JsonMethods._
 import scala.reflect._
 import com.mchange.v2.c3p0.ComboPooledDataSource
 import scala.slick.jdbc.JdbcBackend.Database
-
+import com.sennue.api_template.models._
 
 // For more on Specs2, see http://etorreborre.github.com/specs2/guide/org.specs2.guide.QuickStart.html
 class ApiServletSpec extends ScalatraSpec {
