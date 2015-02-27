@@ -51,7 +51,8 @@ trait SlickRoutes extends SennueApiTemplateStack with JacksonJsonSupport {
     var result: Int = 0
     var message = parsedBody.extract[MessagePost]
     db withDynSession { implicit session: Session =>
-      result = messages.insert(Message(-1, message.userId, new Timestamp(System.currentTimeMillis()), true, message.username, message.message))
+      //result = messages.insert(Message(-1, message.userId, new Timestamp(System.currentTimeMillis()), true, message.username, message.message))
+      result = messages += Message(-1, message.userId, new Timestamp(System.currentTimeMillis()), true, message.username, message.message)
     }
     Result(true, result)
   }
