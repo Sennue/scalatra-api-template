@@ -3,6 +3,7 @@ package com.sennue.api_template
 import org.scalatra._
 import scalate.ScalateSupport
 import org.json4s.{DefaultFormats, Formats}
+import org.slf4j.{Logger, LoggerFactory}
 import org.scalatra.json._
 import scala.slick.jdbc.JdbcBackend.Database
 import com.sennue.api_template.ConfiguredPostgresDriver.simple._
@@ -14,6 +15,7 @@ case class ApiServlet(db:Database) extends SennueApiTemplateStack with SlickRout
 trait SlickRoutes extends SennueApiTemplateStack with JacksonJsonSupport {
 
   val db: Database
+  val logger =  LoggerFactory.getLogger(getClass)
 
   protected implicit val jsonFormats: Formats = DefaultFormats
 
@@ -26,6 +28,7 @@ trait SlickRoutes extends SennueApiTemplateStack with JacksonJsonSupport {
   }
 
   get("/") {
+    logger.info("hello world logger")
     Result[Message](true, new Message(0, "system", new Timestamp(System.currentTimeMillis()), true, "anonymous", "Hello, world!"))
   }
 

@@ -29,13 +29,15 @@ object SennueApiTemplateBuild extends Build {
         "org.json4s"   %% "json4s-jackson" % "3.2.11",
         "c3p0" % "c3p0" % "0.9.1.2",
         "com.typesafe.slick" %% "slick" % "2.1.0",
-        "org.postgresql" % "postgresql" % "9.4-1200-jdbc41",
-        "com.github.tminglei" %% "slick-pg" % "0.8.2",
+        "org.postgresql" % "postgresql" % "9.4-1200-jdbc41" exclude("org.slf4j", "slf4j-simple"),
+        "com.github.tminglei" %% "slick-pg" % "0.8.2" exclude("org.slf4j", "slf4j-simple"),
         "com.vividsolutions" % "jts" % "1.13" % "provided",
         "org.eclipse.jetty" % "jetty-webapp" % "9.1.5.v20140505" % "container",
         "org.eclipse.jetty" % "jetty-plus" % "9.1.5.v20140505" % "container",
         "javax.servlet" % "javax.servlet-api" % "3.1.0",
-        "ch.qos.logback" % "logback-core" % "1.1.2" % "runtime",
+        "org.slf4j" % "slf4j-api" % "1.7.10",
+        //"org.slf4j" % "slf4j-simple" % "1.7.10"
+        "ch.qos.logback" % "logback-core" % "1.1.2",
         "ch.qos.logback" % "logback-classic" % "1.1.2" % "runtime"
       ),
       scalateTemplateConfig in Compile <<= (sourceDirectory in Compile){ base =>
