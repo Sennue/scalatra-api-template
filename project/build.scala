@@ -35,6 +35,7 @@ object SennueApiTemplateBuild extends Build {
         "org.eclipse.jetty" % "jetty-webapp" % "9.1.5.v20140505" % "container",
         "org.eclipse.jetty" % "jetty-plus" % "9.1.5.v20140505" % "container",
         "javax.servlet" % "javax.servlet-api" % "3.1.0",
+        "ch.qos.logback" % "logback-core" % "1.1.2" % "runtime",
         "ch.qos.logback" % "logback-classic" % "1.1.2" % "runtime"
       ),
       scalateTemplateConfig in Compile <<= (sourceDirectory in Compile){ base =>
