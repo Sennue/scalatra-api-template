@@ -44,3 +44,10 @@ export MESSAGE='"Hello everyone!"'
 curl -X POST -H $CONTENT_TYPE -d "{\"userId\":$USER_ID,\"username\":$USERNAME,\"message\":$MESSAGE}" $SENNUE_API/$SENNUE_ENDPOINT | python -m json.tool
 ```
 
+## Clear Cache for SLF4J ##
+
+```sh
+> git clean -f -d -x
+> rm -rf ../.ivy2/cache/org.slf4j
+```
+
