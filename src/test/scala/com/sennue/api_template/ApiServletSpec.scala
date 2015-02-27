@@ -5,6 +5,8 @@ import org.json4s.{DefaultFormats, Formats}
 import org.json4s.jackson.JsonMethods._
 import scala.reflect._
 import com.mchange.v2.c3p0.ComboPooledDataSource
+import com.sennue.api_template.ConfiguredPostgresDriver.simple._
+import java.sql.Timestamp
 import scala.slick.jdbc.JdbcBackend.Database
 import com.sennue.api_template.models._
 import org.slf4j.Logger
@@ -13,7 +15,7 @@ import org.slf4j.LoggerFactory
 // For more on Specs2, see http://etorreborre.github.com/specs2/guide/org.specs2.guide.QuickStart.html
 class ApiServletSpec extends ScalatraSpec {
 
-  var logger: Logger = LoggerFactory.getLogger(ApiServletSpec)
+  var logger: Logger = LoggerFactory.getLogger(classOf[ApiServletSpec])
   protected implicit val jsonFormats: Formats = DefaultFormats
   val db = Database.forURL(url = "jdbc:postgresql://localhost:5432/database-name?user=username", driver = "org.postgresql.Driver")
 
@@ -49,6 +51,8 @@ class ApiServletSpec extends ScalatraSpec {
     "bad JSON should have error type"            ! postResponseBodyKeyOfType[String]("/echo", ECHO_REQUEST_BAD, "error")^
     "POST /echo on ApiServlet"                   ^
     "bad JSON should have error value"           ! postResponseBodyKeyOfType[String]("/echo", ECHO_REQUEST_BAD, "message")^
+    "insert test"                                ^
+    "new row should be created"                  ! {db withSession { implicit session => 1 must_== (messages += Message(-1, API_USER_ID, new Timestamp(System.currentTimeMillis()), true, ECHO_USERNAME, ECHO_MESSAGE)) } }^
                                                  end
 
   def getStatusCode(uri:String, code:Int) = 

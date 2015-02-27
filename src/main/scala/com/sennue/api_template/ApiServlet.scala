@@ -7,7 +7,6 @@ import org.scalatra.json._
 import scala.slick.jdbc.JdbcBackend.Database
 import com.sennue.api_template.ConfiguredPostgresDriver.simple._
 import com.sennue.api_template.models._
-import com.sennue.api_template.models.MessageTable
 import java.sql.Timestamp
 
 case class ApiServlet(db:Database) extends SennueApiTemplateStack with SlickRoutes
